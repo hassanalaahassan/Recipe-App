@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, QueryList, ViewChildren, viewChildren } from '@angular/core';
+import { AfterViewInit, Component, OnInit, QueryList, ViewChildren, viewChildren } from '@angular/core';
 import { TransformUpDirective } from '../../dirctives/transform-up.directive';
 import { LinkComponent } from "./link/link.component";
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -9,29 +10,32 @@ import { LinkComponent } from "./link/link.component";
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss'
 })
-export class SideBarComponent  {
+export class SideBarComponent implements OnInit  {
 
 
-  linksData:{title:string,icon:string}[] = [
+  linksData:{title:string,icon:string,route?:string,linkFor?:string}[] = [
     {
-      title:"Dashboard",
-      icon:"sidebar/Links-icons/mail-open.png"
+      title:"All Recipes",
+      icon:"sidebar/Links-icons/chef-hat.png",
+      route:"/All-Recipes",
+      linkFor:"all"
     },
     {
-      title:"Products",
-      icon:"sidebar/Links-icons/Products.png"
+      title:"Create Recipe",
+      icon:"sidebar/Links-icons/badge-plus.png",
+      route:"/Create-Recipe",
+      linkFor:"admin"
     },
     {
-      title:"Invoices",
-      icon:"sidebar/Links-icons/Reset.png"
-    },
-    {
-      title:"Customers",
-      icon:"sidebar/Links-icons/Users_Group_Rounded.png"
+      title:"Favorite Recipes",
+      icon:"sidebar/Links-icons/white-heart.png",
+      route:"/Fav-Recipe",
+      linkFor:"user"
     },
     {
       title:"Analytics",
-      icon:"sidebar/Links-icons/Pie_Chart.png"
+      icon:"sidebar/Links-icons/Pie_Chart.png",
+      linkFor:"all"
     },
     {
       title:"Marketing",
@@ -39,18 +43,41 @@ export class SideBarComponent  {
     },
     {
       title:"Settings",
-      icon:"sidebar/Links-icons/Settings.png"
+      icon:"sidebar/Links-icons/Settings.png",
+      linkFor:"admin"
     },
     {
       title:"Help",
-      icon:"sidebar/Links-icons/User_Help.png"
+      icon:"sidebar/Links-icons/User_Help.png",
+      linkFor:"user"
     },
+    {
+      title:"Log out",
+      icon:"sidebar/log-out.png",
+      linkFor:"all"
+    }
   ]
   activeLink:{title:string,icon:string}  = this.linksData[0]
 
+  user:any
+
+  constructor(
+    private auth:AuthService
+  )
+  {}
+
+  ngOnInit(): void {
+    this.user = this.auth.getCurrentUser()
+  }
   setActive(link:{title:string,icon:string}):void{
     this.activeLink = link
+    if (link.title === "Log out") {
+      this.signOut()
+    }
   }
 
+  signOut():void{
+    this.auth.logOut()
+  }
 
 }

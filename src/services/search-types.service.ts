@@ -18,9 +18,11 @@ export class SearchTypesService {
   }
 
   searchById(recipeId: number): Recipe{
+    this.saveData();
     return this.globalRecipe.filter((recipe) => recipe.id === recipeId)[0];
   }
   searchByTitle(searchTerm: string): Recipe[] {
+    this.saveData();
     if(searchTerm)
       return this.globalRecipe.filter((recipe)=> recipe.title.toUpperCase().includes(searchTerm.toUpperCase()))
 
