@@ -1,17 +1,20 @@
-import { AfterViewInit, Component, OnInit, QueryList, ViewChildren, viewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren, viewChildren } from '@angular/core';
 import { TransformUpDirective } from '../../dirctives/transform-up.directive';
 import { LinkComponent } from "./link/link.component";
 import { AuthService } from '../../../services/auth.service';
+import { ResponsiveService } from '../../../services/responsive.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-side-bar',
   standalone: true,
-  imports: [TransformUpDirective, LinkComponent],
+  imports: [TransformUpDirective, LinkComponent,CommonModule],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss'
 })
 export class SideBarComponent implements OnInit  {
 
+  @ViewChild("sidebar") sideBar!:ElementRef
 
   linksData:{title:string,icon:string,route?:string,linkFor?:string}[] = [
     {
@@ -61,8 +64,12 @@ export class SideBarComponent implements OnInit  {
 
   user:any
 
+  isSideBarShowed:boolean = true
+  flagClass:boolean = true
+
   constructor(
-    private auth:AuthService
+    private auth:AuthService,
+    private responsive:ResponsiveService
   )
   {}
 
@@ -75,7 +82,17 @@ export class SideBarComponent implements OnInit  {
       this.signOut()
     }
   }
+  toggleSideBar():void{
+    this.flagClass = !this.flagClass
+    
+    const timiId = setTimeout(()=>{
+      this.isSideBarShowed = !this.isSideBarShowed
+      console.log(this.isSideBarShowed);
 
+    },400)
+
+    // clearTimeout(timiId)
+  }
   signOut():void{
     this.auth.logOut()
   }

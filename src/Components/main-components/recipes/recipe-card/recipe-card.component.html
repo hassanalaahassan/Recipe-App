@@ -1,4 +1,7 @@
-<a class="flex h-full flex-col relative bg-white border border-gray-200 rounded-lg shadow-sm p-1.5 md:p-3 md:max-w-xl">
+<a
+  appScrollAnimation
+
+class="card flex h-full flex-col relative bg-white border border-gray-200 rounded-lg shadow-sm p-1.5 md:p-3 md:max-w-xl">
   @if (user.role =="user") {
     @if (!recipeIsFavorite) {
       <img src="Fav/heart.png" (click)="addRecipeToFavorites(recipe.id)" alt="favorite" class="absolute bottom-2 right-4 w-6 h-6 cursor-pointer z-50">

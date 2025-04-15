@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { Recipe } from '../../../../interfaces/recipe.int';
 import { RecipesService } from '../../../../services/Recipes.service';
 import { AuthService } from '../../../../services/auth.service';
+import { ScrollAnimationDirective } from '../../../../shared/dirctives/scroll-animation.directive';
 
 
 
 @Component({
   selector: 'app-recipe-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,ScrollAnimationDirective],
   templateUrl: './recipe-card.component.html',
   styleUrl: './recipe-card.component.scss'
 })

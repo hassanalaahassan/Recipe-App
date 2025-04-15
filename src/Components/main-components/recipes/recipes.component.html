@@ -1,5 +1,4 @@
 <div class="grid grid-cols-12 gap-2">
-
   @if (recipes.length > 0) {
     <div class="col-span-12">
       <app-home-header (searchTerm)="filterRecipes($event)"/>
@@ -7,7 +6,7 @@
   }
 
   @for (recipe of recipes; track recipe.id) {
-    <div class="col-span-full md:col-span-6 lg:col-span-4">
+    <div class="col-span-full md:col-span-6 lg:col-span-4 overflow-hidden">
       <app-recipe-card  (showedRecipe)="receiveRecipeFromChild($event)" [recipe]="recipe"/>
     </div>
   }
